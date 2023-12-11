@@ -32,6 +32,13 @@ int dist() {
 
    return distance;
 }
-  
+  bool detection(){
+  int d = dist();
+  if(d < 120 && d > 0){
+    return true;
+  }else{
+    return false;
+  }
+}
 };
 //=====END CLASS======
