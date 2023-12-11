@@ -89,10 +89,10 @@ void loop() {
   Serial.print(dist3);
   Serial.print(",");
   Serial.print(dist4);
-  // Serial.print(",");
-  // Serial.print(dist5);
-  // Serial.print(",");
-  // Serial.print(dist6);
+  Serial.print(",");
+  Serial.print(dist5);
+  Serial.print(",");
+  Serial.print(dist6);
  
   
   Serial.print("\n");
