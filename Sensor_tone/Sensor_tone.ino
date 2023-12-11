@@ -1,7 +1,5 @@
 #include "Sensor.h"
-#include <PWM.h>
-int32_t frequency = 440; // Establezca la Frecuencia en Hertz (HZ), se pueden operar frecuencias de 10Hz a 300kHz aprox
-int32_t frequency2 = 493; 
+
 //-----Sensor pointer-
 Sensor * s1;
 Sensor * s2;
@@ -13,23 +11,21 @@ Sensor * s4;
 #define buzzer1 2
 #define buzzer2 3
 
+#define Pecho1 12
+#define Ptrig1 13
+#define Pecho2 10
+#define Ptrig2 11
+#define Pecho3 8
+#define Ptrig3 9
+#define Pecho4 6
+#define Ptrig4 7  
 void setup() {
 
-  InitTimersSafe(); 
-
-  //Establece la frecuencia para el pin especificado
-  bool success = SetPinFrequencySafe(buzzer1, frequency1);
-  bool success = SetPinFrequencySafe(buzzer2, frequency2);
-  //SI LA FRECUENCIA DEL PIN SE CONFIGURO CORRECTAMENTE, ENCIENDA EL PIN 13.
-  if(success) {
-    pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);    
-  }
-  //----Construct sensor class--
-  s1 = new Sensor(12, 13);
-  s2 = new Sensor(10,11);
-  s3 = new Sensor(8,9);
-  s4 = new Sensor(6,7);
+  //Sensor(int pinTrig, int pinEcho)
+  s1 = new Sensor(Ptrig1,Pecho1);
+  s2 = new Sensor(Ptrig2,Pecho2);
+  s3 = new Sensor(Ptrig3,Pecho3);
+  s4 = new Sensor(Ptrig4,Pecho4);
   // s5 = new Sensor(13,14);
   // s6 = new Sensor(15,16);
   
@@ -47,12 +43,15 @@ void loop() {
    unsigned long dist4 = s4->dist();
   //  unsigned long dist5 = s5->dist();
   //  unsigned long dist6 = s6->dist();
-   
-   if(dist1 < 120 && dist1 > 0){
-    pwmWrite(buzzer1, 127); //El segundo parámetro es para ajustar el duty. (0-255 si no estoy mal)
+  bool detectar1 = s1->detection();
+  bool detectar2 = s2->detection();
+  bool detectar3 = s3->detection();
+  bool detectar4 = s4->detection();
+   if(detectar1){
+    tone(buzzer1, 880);
    }
-   if(dist2<120 && dist2 > 0){
-    pwmWrite(buzzer2, 127); //El segundo parámetro es para ajustar el duty.
+   else if(detectar2){
+    tone(buzzer2, 988);
    }
   
   
@@ -71,5 +70,5 @@ void loop() {
  
   
   Serial.print("\n");
-  delay(100);
+  delay(10);
 }
